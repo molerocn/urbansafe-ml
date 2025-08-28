@@ -1,0 +1,1 @@
+Datos obtenidos del dataset [Registros delictivos del Observatorio Regional de Seguridad Ciudadana en la Provincia Constitucional del Callao GORECALLAO](https://datosabiertos.gob.pe/dataset/registros-delictivos-del-observatorio-regional-de-seguridad-ciudadana-en-la-provincia)
