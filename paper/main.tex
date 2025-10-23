@@ -1,0 +1,113 @@
+\documentclass[runningheads]{llncs}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\begin{document}
+
+\title{Desarrollo de un modelo de machine learning para mejorar la seguridad
+ciudadana mediante predicción de riesgo en la región del Callao}
+
+\titlerunning{Predicción de riesgo con ML}
+% \author{Juan Molero\inst{1}\orcidID{0000-1111-2222-3333}}
+\author{Juan Carlos Molero Rojas}
+
+\authorrunning{J. Molero}
+\institute{Universidad Tecnológica del Perú}
+
+\maketitle
+
+\begin{abstract}
+\end{abstract}
+
+\section{Introducción}
+
+La seguridad ciudadana se ha transformado en uno de los retos sociales más
+importantes en América Latina, que afectan de forma directa la calidad de vida
+y el bienestar común. Este concepto incluye no solamente la protección contra
+el delito, sino también la seguridad de derechos, la coexistencia pacífica y la
+fe en las instituciones. Hoy en día, el aumento de delitos como la violencia
+entre personas, el hurto y el crimen organizado han producido una sensación
+generalizada de inseguridad, sobre todo en áreas urbanas en situación de
+vulnerabilidad.
+
+En el año 2020, un estudio realizado en el marco del proyecto CITYCoP encuestó
+a 272 ciudadanos de 11 países europeos, revelando que el 16.2\% de los
+participantes percibían vivir en zonas de alta criminalidad, mientras que el
+68.8\% afirmaban lo contrario y un 15.1\% no estaban seguros. Aquellos que se
+sentían expuestos a altos niveles de criminalidad reportaron un 58\% más de
+signos de desorden social y físico en sus barrios, como edificios abandonados,
+basura en las calles y actos de vandalismo. Además, presentaron un 37\% menos
+de confianza en la policía y un 25\% menos de cohesión comunitaria en
+comparación con quienes vivían en zonas consideradas seguras. Estos datos
+evidencian que la percepción de inseguridad no solo afecta el bienestar
+psicológico de los ciudadanos, sino que también deteriora la confianza
+institucional y el tejido social \cite{reid2020}.
+
+En Colombia, la seguridad ciudadana enfrenta una crisis persistente que se
+refleja en cifras alarmantes. Solo en el año 2022 se registraron 13,536
+homicidios intencionales, lo que equivale a un promedio de 37 muertes violentas
+por día. Esta situación afecta a jóvenes y adultos entre los 19 y 59 años,
+quienes representan más del 89\% de las víctimas. Asimismo, el hurto a personas
+aumentó un 25.4\% respecto al año 2021, alcanzando más de 351,000 casos,
+consolidándose como uno de los delitos de mayor crecimiento en la última
+década. Con estas cifras se descubren patrones estructurales vinculados a la
+informalidad laboral, la pobreza y la limitada presencia institucional en zonas
+rurales \cite{nunez2024}.
+
+En el ámbito nacional, la inseguridad ciudadana se ha consolidado como uno de
+los principales desafíos sociales, con una percepción negativa que afecta a
+múltiples regiones del Perú. Según una revisión sistemática de literatura de 15
+estudios realizados entre 2020 y 2024, más del 73\% de los ciudadanos en zonas
+como Chiclayo consideran ineficaces las intervenciones policiales, mientras que
+en distritos como San Martín de Porres se reporta una falta de efectivos y
+demoras considerables en la atención de denuncias. Esta situación se agrava por
+factores estructurales como el desempleo juvenil, la informalidad económica, la
+corrupción institucional y la migración venezolana, que han intensificado el
+temor y la desconfianza hacia las autoridades. La inseguridad no solo deteriora
+la calidad de vida, sino que también genera efectos psicológicos y sociales que
+afectan la salud mental \cite{anton-chunga2025}.
+
+\section{Trabajos relacionados}
+
+La investigación sobre patrones delictivos es un aspecto importante para la
+seguridad pública y, debido al avance de la inteligencia artificial, los
+modelos de machine learning son una herramienta excelente para poder investigar
+y contener el delito. El objetivo de este estudio es predecir los casos de
+delincuencia de 2017 a 2020 utilizando un conjunto de datos de 2001 a 2016,
+mediante la creación de modelos predictivos que anticipen futuras tendencias
+delictivas. La metodología se basa en un modelo de machine learning que utiliza
+algoritmos tanto de clasificación, agrupación y regresión, como lo son los
+algoritmos de Regresión Lineal y Random Forest, aplicados a datos de delitos de
+la India entre 2001 y 2016. Los resultados muestran una alta precisión en la
+predicción de diversos tipos de delitos, con tasas de exactitud que van desde
+el 89\% en intentos de asesinato hasta el 95\% en casos de violación y robo. En
+conclusión, los modelos de machine learning, en particular el de K-Nearest
+Neighbors, demuestran ser eficaces para predecir delitos con la precisión
+deseada, identificando y localizando las zonas de mayor incidencia
+\cite{s2024}.
+
+Asimismo, dada la alta percepción de inseguridad en Perú, y en particular en el
+distrito limeño de Los Olivos que se ha convertido en un problema nacional,
+surge esta investigación. El objetivo del estudio fue proponer una solución
+tecnológica para la seguridad ciudadana y la prevención del delito, capaz de
+enviar una alerta en tiempo real a los usuarios indicando la probabilidad de
+que ocurra un acto delictivo en su ubicación. La metodología se basó en el
+desarrollo de un modelo de machine learning utilizando el algoritmo Naive
+Bayes, el cual fue validado comparando su rendimiento con otros algoritmos como
+Classification Forest, Catboost y KNN a través de una matriz de confusión y
+métricas como accuracy, precision y recall, además de ser probado con una
+muestra de 108 usuarios. Los resultados de la validación con usuarios arrojaron
+un alto nivel de aceptación, con un 93.5\% de ellos indicando que la solución
+ayuda a prevenir incidentes delictivos. En la validación técnica, aunque el
+artículo no especifica los porcentajes exactos de las métricas, según menciona
+el autor, se determinó que Naive Bayes fue el más adecuado porque a pesar de
+tener un valor de accuracy similar al de otros modelos, ofrecía la mejor
+distribución de variables por categoría y una mayor velocidad de predicción. En
+conclusión, el proyecto logró desarrollar una solución tecnológica funcional
+para la prevención del delito, demostrando la eficacia del algoritmo Naive
+Bayes y obteniendo una alta aceptación por parte de los usuarios
+\cite{mansilla2023}.
+
+\bibliographystyle{splncs04}
+\bibliography{ref}
+
+\end{document}
