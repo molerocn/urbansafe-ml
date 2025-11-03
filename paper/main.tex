@@ -3,11 +3,10 @@
 \usepackage{graphicx}
 \begin{document}
 
-\title{Desarrollo de un modelo de machine learning para mejorar la seguridad
-ciudadana mediante predicción de riesgo en la región del Callao}
+\title{Predicción de crimen con Machine Learning usando datos espaciotemporales
+de la región del Callao}
 
 \titlerunning{Predicción de riesgo con ML}
-% \author{Juan Molero\inst{1}\orcidID{0000-1111-2222-3333}}
 \author{Juan Carlos Molero Rojas}
 
 \authorrunning{J. Molero}
@@ -106,6 +105,159 @@ conclusión, el proyecto logró desarrollar una solución tecnológica funcional
 para la prevención del delito, demostrando la eficacia del algoritmo Naive
 Bayes y obteniendo una alta aceptación por parte de los usuarios
 \cite{mansilla2023}.
+
+En \cite{ahmad2024} los autores mencionan la importancia de entender los
+patrones de los registros delictivos para poder prevenir tipos de crímenes que
+vienen desde hurto y vandalismo hasta homicidios y terrorismo. El objetivo de
+su investigación fue crear un dashboard basado en datos espacio temporales para
+predecir puntos críticos en las ciudades de tal manera que sea posible realizar
+un seguimiento en tiempo real. Los autores llamaron CHART a la metodología
+utilizada durante su investigación, este consiste en el uso de los datasets
+"Crime in Vancouver" de Kaggle con 530 652 registros desde 2006 al 2021, "ICT
+Police Crime Data" de la base de datos policial ICT con 120 442 registros desde
+2009 al 2021 y "Crime in India" con 530,652 registros, seguido del
+preprocesamiento de los datos através de la normalización y asegurando
+consistencia en las 3 fuentes de datos; continuando con el balance de los datos
+con Adaptive Synthetic Sampling (ADASYN); seguido de el proceso de ingeniería
+de características para extraer características importantes, etiquetarlas y
+clasificarlas; como últimos pasos, los autores optaron por hacer un mapa de
+calor para tener una visualización de los registros delictivos y la aplicación
+de el modelo Random Forest para fines predictivos y preventivos. Como
+resultado, la metodología utilizada en el estudio obtuvo un 95.65\% de
+accuracy, 93.87\% de precisión y un 94.56\% de recall, logrando hacer una
+diferencia significativa con las metodologías tradicionales que usan modelos
+como KNN, Linear Regression, Logistic Regression, Support Vector Machine y
+Naive Bayes. En conclusión, este estudio permite poder reforzar la seguridad
+enfocándose en zonas con alto riesgo gracias a la visualización del mapa de
+calor y prevenir incidentes mediante el modelo de machine predictivo.
+
+\section{Metodología}
+
+\begin{figure}[h!] 
+    \centering 
+    \includegraphics[width=1\textwidth]{diagrams/metodologia.png}
+    \caption{Metodología}
+\end{figure}
+
+
+\subsection{Obtención del dataset}
+
+Para este estudio, se utilizó el conjunto de datos de acceso público "Registros
+delictivos del Observatorio Regional de Seguridad Ciudadana en la Provincia
+Constitucional del Callao". Este dataset contiene un total de 2643 registros de
+incidentes reportados.
+
+Cada registro detalla información relevante sobre la denuncia, incluyendo la
+ubicación geográfica, la marca temporal y la naturaleza del incidente. Las
+columnas clave utilizadas para este análisis se describen en la tabla
+\ref{tab:campos-dataset-completos}.
+
+\begin{table}[h!]
+\centering
+\caption{Campos del dataset "Registros delictivos del Observatorio Regional de Seguridad Ciudadana en la Provincia Constitucional del Callao"}
+\label{tab:campos-dataset-completos}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l p{10cm}}
+\toprule
+\textbf{Campo} & \textbf{Descripción} \\
+\midrule
+\texttt{FECHA\_CORTE} & Fecha de corte de la extracción de datos. \\
+\texttt{FECHA\_REGISTRO} & Fecha en que se registró la denuncia. \\
+\texttt{ID\_DOC\_DENUNCIA} & Identificador único del documento de denuncia. \\
+\texttt{UBIGEO} & Código de Ubicación Geográfica (Ubigeo). \\
+\texttt{DEPARTAMENTO} & Departamento donde ocurrió el hecho. \\
+\texttt{PROVINCIA} & Provincia donde ocurrió el hecho. \\
+\texttt{DISTRITO} & Distrito donde ocurrió el hecho. \\
+\texttt{TIPO\_DE\_DENUNCIA} & Tipo de documento (ej. "DENUNCIA"). \\
+\texttt{SITUACION\_DENUNCIA} & Estado actual de la denuncia (ej. "PENDIENTE"). \\
+\texttt{TIPO} & Categoría principal del incidente (ej. "PATRIMONIO"). \\
+\texttt{SUBTIPO} & Subcategoría del incidente. \\
+\texttt{MODALIDAD} & Modalidad específica del incidente. \\
+\texttt{FECHA\_HECHO} & Fecha en la que ocurrió el incidente. \\
+\texttt{HORA\_HECHO} & Hora (en formato entero) del incidente. \\
+\texttt{UBICACION} & Dirección o lugar de referencia del incidente. \\
+\texttt{DESCRIPCION} & Descripción de la ubicación. \\
+\texttt{FECHA\_NACIMIENTO} & Fecha de nacimiento del denunciante/víctima. \\
+\texttt{EDAD\_PERSONA} & Edad del denunciante/víctima. \\
+\texttt{SEXO} & Sexo del denunciante/víctima. \\
+\texttt{ESTADO\_CIVIL} & Estado civil del denunciante/víctima. \\
+\texttt{GRADO\_INSTRUCCION} & Grado de instrucción del denunciante/víctima. \\
+\texttt{OCUPACION} & Ocupación del denunciante/víctima. \\
+\texttt{PAIS\_NATAL} & País de nacimiento del denunciante/víctima. \\
+\texttt{MES} & Mes en que ocurrió el hecho. \\
+\texttt{LONGITUD} & Coordenada de longitud (geográfica). \\
+\texttt{LATITUD} & Coordenada de latitud (geográfica). \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\begin{figure}[h!] 
+    \centering 
+    \includegraphics[width=1\textwidth]{diagrams/incidentes.png}
+    \caption{Número de incidentes por hora}
+\end{figure}
+
+\subsection{Preprocesamiento}
+
+El dataset crudo no es directamente aplicable a un modelo de predicción de
+riesgo. Por lo tanto, se implementó un pipeline de preprocesamiento para
+transformar los registros de incidentes en un formato de (Zona, Hora)
+$\rightarrow$ Riesgo.
+
+\subsubsection{Clustering espacial (DBSCAN)}
+
+Para definir "zonas" o "hotspots" de riesgo de manera automática, se aplicó el
+algoritmo DBSCAN (Density-Based Spatial Clustering of Applications with Noise).
+Este método se aplicó sobre las coordenadas (LONGITUD, LATITUD) escaladas y
+permitió agrupar los incidentes en clusters de alta densidad, asignando a cada
+uno un CLUSTER\_ID. Los incidentes aislados (ruido, cluster -1) fueron
+descartados del análisis posterior.
+
+\begin{figure}[h!] 
+    \centering 
+    \includegraphics[width=0.8\textwidth]{diagrams/cluster_dbscan.png}
+    \caption{Mapa de clusters de riesgo generado por DBSCAN}
+\end{figure}
+
+\subsubsection{Generación del Dataset de Entrenamiento}
+
+Se generó un nuevo dataset donde la unidad de análisis no es el incidente, sino
+el bloque (Zona, Hora). Se crearon todas las combinaciones posibles de
+CLUSTER\_ID (zonas) y HORA\_DEL\_DIA (0-23). Posteriormente, se contabilizó el
+número de incidentes (NRO\_INCIDENTES) para cada bloque.
+
+\subsubsection{Codificación de Variables}
+
+la variable objetivo NIVEL\_RIESGO se creó mediante la discretización de
+NRO\_INCIDENTES en tres categorías: 'Bajo' (0 incidentes), 'Medio' y 'Alto'
+(definidos por la mediana de los bloques con incidentes). Las variables
+predictoras (CLUSTER\_ID y HORA\_DEL\_DIA) fueron transformadas usando One-Hot
+Encoding para su uso en los modelos.
+
+\subsection{Implementación de los modelos}
+
+Para la tarea de clasificación multiclase (Bajo, Medio, Alto), se seleccionaron
+y evaluaron dos modelos con diferentes enfoques algorítmicos. Los datos se
+dividieron en conjuntos de entrenamiento (80\%) y prueba (20\%) utilizando
+estratificación para mantener la proporción de las clases.
+
+\subsubsection{Random Forest}
+
+Se implementó un Random Forest Classifier, un modelo de ensamblaje (ensemble)
+basado en árboles de decisión. Este método opera construyendo múltiples árboles
+de decisión durante el entrenamiento y emitiendo la clase que es la moda de las
+clases de los árboles individuales. Se utilizó el parámetro
+class\_weight='balanced' para mitigar el desbalanceo de clases inherente al
+dataset.
+
+\subsubsection{K-Nearest Neighbors}
+
+Se implementó un clasificador K-Nearest Neighbors (KNN). Este es un modelo no
+paramétrico basado en instancia que clasifica un punto de datos (un bloque
+Zona-Hora) según la clase mayoritaria de sus 'k' vecinos más cercanos en el
+espacio de características codificado. Para este estudio, se utilizó un valor
+de k=7.
 
 \bibliographystyle{splncs04}
 \bibliography{ref}
