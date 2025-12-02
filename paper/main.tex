@@ -1,6 +1,7 @@
 \documentclass[runningheads]{llncs}
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
+\usepackage{booktabs}
 \begin{document}
 
 \title{Predicción de crimen con Machine Learning usando datos espaciotemporales
@@ -15,6 +16,26 @@ de la región del Callao}
 \maketitle
 
 \begin{abstract}
+
+La seguridad ciudadana representa uno de los desafíos más críticos en América
+Latina, afectando directamente la calidad de vida y la confianza institucional.
+Este estudio propone un modelo de aprendizaje automático para la predicción de
+riesgo delictivo espaciotemporal en la región del Callao, Perú. Utilizando un
+conjunto de datos de 2643 registros delictivos, se implementó una metodología
+que integra el algoritmo DBSCAN para la identificación de zonas de alta
+densidad y la evaluación comparativa de cinco algoritmos de
+clasificación: Random Forest, K-Nearest Neighbors (KNN), Regresión Logística,
+Support Vector Machine (SVM) y Gradient Boosting. Los resultados demostraron
+que el modelo Gradient Boosting superó a los demás algoritmos, alcanzando una
+exactitud global del 90.6\% y el mejor equilibrio (F1-Score de 0.61) en la
+detección de la clase minoritaria de alto riesgo. Se concluye que el enfoque
+propuesto, basado en el aprendizaje secuencial y el manejo del desbalance de
+clases, ofrece una herramienta robusta para la emisión de alertas de seguridad
+en tiempo real.
+
+\keywords{Machine Learning \and Crime prediction \and Latitude \and
+Longitude \and Spatiotemporal.}
+
 \end{abstract}
 
 \section{Introducción}
@@ -198,14 +219,21 @@ columnas clave utilizadas para este análisis se describen en la tabla
     \caption{Número de incidentes por hora}
 \end{figure}
 
+\begin{figure}[h!] 
+    \centering 
+    \includegraphics[width=1\textwidth]{diagrams/incidentes_dia.png}
+    \caption{Número de incidentes por cada día de la semana}
+\end{figure}
+
 \subsection{Preprocesamiento}
 
 El dataset crudo no es directamente aplicable a un modelo de predicción de
 riesgo. Por lo tanto, se implementó un pipeline de preprocesamiento para
-transformar los registros de incidentes en un formato de (Zona, Hora)
+transformar los registros de incidentes en un formato de (Zona, Día de la
+semana, Hora)
 $\rightarrow$ Riesgo.
 
-\subsubsection{Clustering espacial (DBSCAN)}
+\subsubsection{DBSCAN}
 
 Para definir "zonas" o "hotspots" de riesgo de manera automática, se aplicó el
 algoritmo DBSCAN (Density-Based Spatial Clustering of Applications with Noise).
@@ -216,7 +244,7 @@ descartados del análisis posterior.
 
 \begin{figure}[h!] 
     \centering 
-    \includegraphics[width=0.8\textwidth]{diagrams/cluster_dbscan.png}
+    \includegraphics[width=1\textwidth]{diagrams/cluster_dbscan.png}
     \caption{Mapa de clusters de riesgo generado por DBSCAN}
 \end{figure}
 
@@ -230,14 +258,14 @@ número de incidentes (NRO\_INCIDENTES) para cada bloque.
 \subsubsection{Codificación de Variables}
 
 la variable objetivo NIVEL\_RIESGO se creó mediante la discretización de
-NRO\_INCIDENTES en tres categorías: 'Bajo' (0 incidentes), 'Medio' y 'Alto'
+NRO\_INCIDENTES en tres categorías: 'Bajo' (0 incidentes) y 'Alto'
 (definidos por la mediana de los bloques con incidentes). Las variables
 predictoras (CLUSTER\_ID y HORA\_DEL\_DIA) fueron transformadas usando One-Hot
 Encoding para su uso en los modelos.
 
 \subsection{Implementación de los modelos}
 
-Para la tarea de clasificación multiclase (Bajo, Medio, Alto), se seleccionaron
+Para la tarea de clasificación multiclase (Bajo, Alto), se seleccionaron
 y evaluaron dos modelos con diferentes enfoques algorítmicos. Los datos se
 dividieron en conjuntos de entrenamiento (80\%) y prueba (20\%) utilizando
 estratificación para mantener la proporción de las clases.
@@ -247,17 +275,278 @@ estratificación para mantener la proporción de las clases.
 Se implementó un Random Forest Classifier, un modelo de ensamblaje (ensemble)
 basado en árboles de decisión. Este método opera construyendo múltiples árboles
 de decisión durante el entrenamiento y emitiendo la clase que es la moda de las
-clases de los árboles individuales. Se utilizó el parámetro
-class\_weight='balanced' para mitigar el desbalanceo de clases inherente al
-dataset.
+clases de los árboles individuales \cite{breiman2001}. Se utilizó el
+parámetro class\_weight='balanced' para mitigar el desbalanceo de clases
+inherente al dataset.
+
+\begin{equation}
+    \hat{y} = c_{\text{argmax}} \sum_{t=1}^{T} \mathbb{I}(h_t(x) = c)
+\end{equation}
+
+Donde:
+\begin{itemize}
+    \item $\hat{y}$: La clase predicha final por el modelo (moda de las predicciones).
+    \item $T$: Número total de árboles de decisión en el bosque ($n\_estimators$).
+    \item $h_t(x)$: Predicción de la clase realizada por el $t$-ésimo árbol individual para la entrada $x$.
+    \item $\mathbb{I}(\cdot)$: Función indicadora que retorna 1 si la condición es verdadera y 0 en caso contrario.
+\end{itemize}
 
 \subsubsection{K-Nearest Neighbors}
 
 Se implementó un clasificador K-Nearest Neighbors (KNN). Este es un modelo no
 paramétrico basado en instancia que clasifica un punto de datos (un bloque
 Zona-Hora) según la clase mayoritaria de sus 'k' vecinos más cercanos en el
-espacio de características codificado. Para este estudio, se utilizó un valor
+espacio de características codificado \cite{cover1967}. Para este estudio, se utilizó un valor
 de k=7.
+
+Distancia Euclidiana:
+
+\begin{equation}
+    d(x, x_i) = \sqrt{\sum_{j=1}^{p} (x_j - x_{ij})^2}
+\end{equation}
+
+Función de decisión:
+
+\begin{equation}
+    P(y = c | x) = \frac{1}{k} \sum_{i \in N_k(x)} \mathbb{I}(y_i = c)
+\end{equation}
+
+Donde:
+\begin{itemize}
+    \item $P(y = c | x)$: Probabilidad estimada de que el punto $x$ pertenezca a la clase $c$.
+    \item $k$: Número de vecinos más cercanos considerados (hiperparámetro).
+    \item $N_k(x)$: Conjunto de índices de los $k$ puntos de entrenamiento más cercanos a $x$ según la distancia Euclidiana.
+    \item $y_i$: Etiqueta de clase real del vecino $i$-ésimo.
+    \item $\mathbb{I}(y_i = c)$: Función que vale 1 si el vecino $i$ pertenece a la clase $c$, y 0 si no.
+\end{itemize}
+
+\subsubsection{Logistic Regression}
+
+Se incluyó la Regresión Logística como modelo de referencia (baseline). Este es
+un algoritmo estadístico lineal que estima la probabilidad de que una instancia
+pertenezca a una clase determinada utilizando la función logística. Su
+inclusión permite evaluar si las relaciones entre las variables predictoras
+(zona, hora, día) y el nivel de riesgo son linealmente separables
+\cite{hosmer2013}. Al igual que en los modelos anteriores, se configuró
+el parámetro \texttt{class\_weight='balanced'} para ajustar los pesos de las
+clases inversamente proporcionales a sus frecuencias.
+
+\begin{equation}
+    P(y=1 | x) = \sigma(w^T x + b) = \frac{1}{1 + e^{-(w^T x + b)}}
+\end{equation}
+
+Donde:
+\begin{itemize}
+    \item $P(y=1 | x)$: Probabilidad condicional de que la instancia pertenezca a la clase positiva (Riesgo Alto).
+    \item $\sigma(z)$: Función sigmoide logística definida como $\frac{1}{1+e^{-z}}$.
+    \item $w$: Vector de pesos o coeficientes aprendidos por el modelo asociados a las características.
+    \item $x$: Vector de características de entrada (zona, día, hora).
+    \item $b$: Término de sesgo (\textit{bias}) o intercepto.
+\end{itemize}
+
+\subsubsection{Support Vector Machine (SVM)}
+
+Se evaluó el algoritmo de Máquinas de Vectores de Soporte (SVM). Este modelo
+supervisado busca encontrar el hiperplano óptimo que maximice el margen de
+separación entre las clases en un espacio multidimensional. Para este estudio,
+se utilizó un kernel de Función de Base Radial (\texttt{kernel='rbf'}), lo que
+permite al modelo proyectar los datos a una dimensión superior y manejar
+fronteras de decisión no lineales \cite{cortes1995}. Se mantuvo el balanceo de pesos para
+contrarrestar la desproporción de los datos.
+
+Kernel RBF:
+
+\begin{equation}
+    K(x, x_i) = \exp\left(-\gamma ||x - x_i||^2\right)
+\end{equation}
+
+Donde:
+\begin{itemize}
+    \item $K(x, x_i)$: Función Kernel (RBF) que calcula la similitud en un espacio dimensional superior.
+    \item $\gamma$: Parámetro del kernel que define el alcance de la influencia de un solo ejemplo de entrenamiento.
+    \item $b$: Término de sesgo del hiperplano óptimo.
+\end{itemize}
+
+\subsubsection{Gradient Boosting Classifier}
+
+Finalmente, se implementó el clasificador Gradient Boosting. A diferencia del
+Random Forest que utiliza la técnica de \textit{bagging} (paralelo), este es un
+método de ensamblaje basado en \textit{boosting} (secuencial). El algoritmo
+construye una serie de árboles de decisión de forma iterativa, donde cada nuevo
+árbol se enfoca en corregir los errores residuales cometidos por el conjunto de
+árboles anteriores \cite{friedman2001}. Se configuró con 100 estimadores, permitiendo al modelo
+aprender patrones complejos y refinar la precisión en las instancias difíciles
+de clasificar.
+
+\begin{equation}
+    F_M(x) = \sum_{m=1}^{M} \nu \cdot h_m(x)
+\end{equation}
+
+Donde:
+\begin{itemize}
+    \item $F_M(x)$: Predicción final del ensamblaje tras completar $M$ etapas.
+    \item $M$: Número total de iteraciones o árboles construidos.
+    \item $\nu$: Tasa de aprendizaje (\textit{learning rate}) que escala la contribución de cada nuevo árbol ($0 < \nu \leq 1$).
+    \item $h_m(x)$: Árbol de decisión base (\textit{weak learner}) entrenado para predecir el pseudo-residuo (error) de la etapa anterior $F_{m-1}(x)$.
+\end{itemize}
+
+\subsection{Evaluación de métricas}
+
+Para evaluar el rendimiento de los modelos predictivos, se utilizaron métricas
+estándar derivadas de la matriz de confusión \cite{powers2011}.
+
+\subsubsection{Accuracy}
+
+La exactitud (Accuracy) mide la proporción total de predicciones correctas
+(tanto positivas como negativas) sobre el total de casos evaluados. Es una
+métrica global del desempeño del modelo.
+
+\begin{equation}
+    \text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}
+\end{equation}
+
+\subsubsection{Precision}
+
+La precisión evalúa la calidad de las predicciones positivas. Indica qué
+proporción de las instancias clasificadas como "Alto Riesgo" realmente
+pertenecían a esa categoría, penalizando los falsos positivos.
+
+\begin{equation}
+    \text{Precision} = \frac{TP}{TP + FP}
+\end{equation}
+
+\subsubsection{Recall}
+
+También conocido como Sensibilidad, mide la capacidad del modelo para
+identificar correctamente todas las instancias positivas reales. En este
+contexto, indica qué porcentaje de las zonas de riesgo real fueron detectadas
+por el modelo.
+
+\begin{equation}
+    \text{Recall} = \frac{TP}{TP + FN}
+\end{equation}
+
+\subsubsection{ROC AUC}
+
+El Área Bajo la Curva ROC (Receiver Operating Characteristic) evalúa la
+capacidad del modelo para distinguir entre clases a través de diferentes
+umbrales de decisión. La curva representa la relación entre la Tasa de
+Verdaderos Positivos (TPR) y la Tasa de Falsos Positivos (FPR). Un valor de AUC
+de 1 indica un modelo perfecto, mientras que 0.5 indica una clasificación
+aleatoria.
+
+\begin{equation}
+    \text{TPR} = \frac{TP}{TP + FN}, \quad \text{FPR} = \frac{FP}{FP + TN}
+\end{equation}
+
+\subsubsection{F1 Score}
+
+El F1 Score es la media la Precisión y el Recall. Es una métrica fundamental en
+datasets desbalanceados, ya que penaliza a los modelos que tienen una precisión
+alta pero un recall bajo o viceversa, proporcionando un balance único del
+rendimiento en la clase positiva.
+
+\begin{equation}
+    F1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}
+\end{equation}
+
+Donde:
+\begin{itemize}
+    \item TP: True Positives  
+    \item TN: True Negatives  
+    \item FP: False Positives 
+    \item FN: False Negatives 
+\end{itemize}
+
+\section{Resultados}
+
+Tras el entrenamiento y evaluación de los cinco algoritmos seleccionados
+(Random Forest, KNN, Regresión Logística, SVM y Gradient Boosting) sobre el
+conjunto de prueba, se obtuvieron métricas de desempeño que permiten determinar
+la eficacia de cada modelo para la tarea de predicción de riesgo delictivo.
+
+Modelos Base (KNN, Regresión Logística, SVM) mostraron un desempeño inferior en
+la identificación de patrones complejos. Aunque SVM y Regresión Logística
+obtuvieron un Recall aceptable, su precisión fue baja, lo que indica una
+tendencia a generar un exceso de falsas alarmas, reduciendo la confiabilidad
+del sistema.
+
+Por otro lado, los modelos de Ensamble (Random Forest y Gradient Boosting)
+dominaron la comparativa, alcanzando una exactitud global superior al 90\%. Sin
+embargo, se observó una competencia ajustada en la capacidad de generalización
+sobre la clase positiva.
+
+Debido a esto, el Gradient Boosting Classifier demostró ser el algoritmo con
+mejor rendimiento general, superando marginalmente al Random Forest en el
+F1-Score para la clase de "Alto Riesgo" (0.6095 frente a 0.6086) y presentando
+el mejor equilibrio entre Precisión y Recall como se puede percibir en la tabla
+\ref{tab:rendimiento-modelos}.
+
+\begin{table}[h!]
+\centering
+\caption{Rendimiento de los Modelos de Clasificación}
+\label{tab:rendimiento-modelos}
+\begin{tabular}{l c c c}
+\toprule
+\textbf{Modelo} & \textbf{Accuracy} & \textbf{F1-Score} & \textbf{Recall} \\
+\midrule
+Gradient Boosting & 0.906178 & 0.609524 & 0.453901 \\
+Random Forest & 0.907323 & 0.608696 & 0.446809 \\
+SVM (Kernel RBF) & 0.845538 & 0.532872 & 0.546099 \\
+Logistic Regression & 0.815789 & 0.504615 & 0.581560 \\
+KNN (k=7) & 0.882151 & 0.477157 & 0.333333 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[h!] 
+    \centering 
+    \label{fig:matriz_confusion}
+    \includegraphics[width=0.8\textwidth]{diagrams/matriz_confusion.png}
+    \caption{Matriz de confusión de el modelo entrenado con Gradient Boosting}
+\end{figure}
+
+La Figura \ref{fig:matriz_confusion} presenta la matriz de confusión resultante
+del modelo seleccionado sobre el conjunto de prueba.
+
+Se observa una concentración significativa de aciertos en el cuadrante superior
+izquierdo (Clase Real: Bajo / Predicción: Bajo). Esto confirma que el modelo ha
+aprendido a identificar con una precisión casi perfecta las zonas y horarios
+donde no existe riesgo delictivo.
+    
+El cuadrante inferior izquierdo (Clase Real: Bajo / Predicción: Alto) presenta
+valores cercanos a cero. Esto indica que el sistema es altamente confiable
+cuando emite una alerta; es decir, prácticamente no genera "falsas alarmas".
+    
+Respecto a la clase minoritaria ("Alto"), se aprecia una dispersión entre
+aciertos. El modelo adopta un enfoque conservador: prioriza asegurar que una
+alerta sea real antes que intentar capturar todos los eventos posibles a costa
+de generar ruido. Aunque esto implica que algunas zonas de riesgo podrían no
+ser etiquetadas como tales, garantiza que las zonas marcadas como peligrosas
+posean una probabilidad de incidencia delictiva verificada y alta.
+
+\section{Discusión}
+
+Los resultados obtenidos validan la tendencia observada en la literatura
+reciente sobre la superioridad de los modelos de ensamble para la predicción
+delictiva. En concordancia con \cite{ahmad2024}, nuestra
+experimentación confirmó que algoritmos como Gradient Boosting y Random Forest
+superan significativamente a modelos tradicionales (KNN, SVM) en el manejo de
+datos complejos y desbalanceados. Asimismo, a diferencia del enfoque local de
+ \cite{mansilla2023}, quien priorizó la velocidad de procesamiento
+utilizando Naive Bayes, esta investigación se centró en maximizar la métrica
+F1-Score para la detección de la clase minoritaria ("Alto Riesgo").
+
+Aunque los resultados obtenidos con el modelo Gradient Boosting son
+prometedores para la identificación de zonas de alto riesgo, es necesario
+reconocer ciertas limitaciones al diseño del estudio. En primer lugar, el
+modelo fue entrenado utilizando exclusivamente denuncias formales, lo que
+excluye la criminalidad que nunca fue reportada y podría subestimar el riesgo
+en zonas con baja tasa de denuncia. Asimismo, se optó por una clasificación
+binaria (Seguro/Riesgo) tras evidenciarse durante la experimentación que una
+escala de tres niveles introducía ruido estadístico significativo entre las
+categorías intermedia y baja; esta decisión, aunque necesaria para garantizar
+la confiabilidad operativa, limita la efectividad de las predicciones.
 
 \bibliographystyle{splncs04}
 \bibliography{ref}

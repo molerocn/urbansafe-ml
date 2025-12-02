@@ -1,16 +1,16 @@
-<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/27.0.9 Chrome/134.0.6998.205 Electron/35.4.0 Safari/537.36" version="27.0.9">
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.0.3 Chrome/140.0.7339.249 Electron/38.7.0 Safari/537.36" version="29.0.3">
   <diagram name="Page-1" id="5BVrmOiy9mcJZ7quzv-8">
-    <mxGraphModel dx="1188" dy="703" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1424" dy="842" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="EFE2q5xteNy90Brtk6nd-8" value="Implementación del modelo" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;" vertex="1" parent="1">
-          <mxGeometry x="290" y="340" width="390" height="110" as="geometry" />
+        <mxCell id="EFE2q5xteNy90Brtk6nd-8" value="Implementación del modelo" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;" parent="1" vertex="1">
+          <mxGeometry x="290" y="340" width="390" height="160" as="geometry" />
         </mxCell>
-        <mxCell id="EFE2q5xteNy90Brtk6nd-11" value="Random Forest" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
-          <mxGeometry x="520" y="375" width="70" height="40" as="geometry" />
+        <mxCell id="EFE2q5xteNy90Brtk6nd-11" value="K-Near&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;est Neighbors&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="450" y="377.5" width="70" height="35" as="geometry" />
         </mxCell>
-        <mxCell id="EFE2q5xteNy90Brtk6nd-13" value="" style="curved=1;endArrow=classic;html=1;rounded=0;entryX=0.444;entryY=-0.003;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="EFE2q5xteNy90Brtk6nd-1" target="EFE2q5xteNy90Brtk6nd-5">
+        <mxCell id="EFE2q5xteNy90Brtk6nd-13" value="" style="curved=1;endArrow=classic;html=1;rounded=0;entryX=0.444;entryY=-0.003;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="EFE2q5xteNy90Brtk6nd-1" target="EFE2q5xteNy90Brtk6nd-5" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="700" y="110" as="sourcePoint" />
             <mxPoint x="750" y="60" as="targetPoint" />
@@ -19,31 +19,31 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="EFE2q5xteNy90Brtk6nd-14" value="" style="group" vertex="1" connectable="0" parent="1">
+        <mxCell id="EFE2q5xteNy90Brtk6nd-14" value="" style="group" parent="1" vertex="1" connectable="0">
           <mxGeometry x="690" y="180" width="220" height="110" as="geometry" />
         </mxCell>
-        <mxCell id="EFE2q5xteNy90Brtk6nd-5" value="Preprocesamiento" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;" vertex="1" parent="EFE2q5xteNy90Brtk6nd-14">
+        <mxCell id="EFE2q5xteNy90Brtk6nd-5" value="Preprocesamiento" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;" parent="EFE2q5xteNy90Brtk6nd-14" vertex="1">
           <mxGeometry width="220" height="110" as="geometry" />
         </mxCell>
-        <mxCell id="EFE2q5xteNy90Brtk6nd-7" value="DBSCAN" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="EFE2q5xteNy90Brtk6nd-14">
+        <mxCell id="EFE2q5xteNy90Brtk6nd-7" value="DBSCAN" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" parent="EFE2q5xteNy90Brtk6nd-14" vertex="1">
           <mxGeometry x="20" y="30" width="70" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="EFE2q5xteNy90Brtk6nd-28" value="One-hot encoding" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="EFE2q5xteNy90Brtk6nd-14">
+        <mxCell id="EFE2q5xteNy90Brtk6nd-28" value="One-hot encoding" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" parent="EFE2q5xteNy90Brtk6nd-14" vertex="1">
           <mxGeometry x="130" y="30" width="70" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="EFE2q5xteNy90Brtk6nd-15" value="" style="group" vertex="1" connectable="0" parent="1">
+        <mxCell id="EFE2q5xteNy90Brtk6nd-15" value="" style="group" parent="1" vertex="1" connectable="0">
           <mxGeometry x="360" y="60" width="220" height="110" as="geometry" />
         </mxCell>
-        <mxCell id="EFE2q5xteNy90Brtk6nd-1" value="Obtención del dataset" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;" vertex="1" parent="EFE2q5xteNy90Brtk6nd-15">
+        <mxCell id="EFE2q5xteNy90Brtk6nd-1" value="Obtención del dataset" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;" parent="EFE2q5xteNy90Brtk6nd-15" vertex="1">
           <mxGeometry width="220" height="110" as="geometry" />
         </mxCell>
-        <mxCell id="EFE2q5xteNy90Brtk6nd-3" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="EFE2q5xteNy90Brtk6nd-15">
+        <mxCell id="EFE2q5xteNy90Brtk6nd-3" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#f8cecc;strokeColor=#b85450;" parent="EFE2q5xteNy90Brtk6nd-15" vertex="1">
           <mxGeometry x="30" y="35" width="60" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="EFE2q5xteNy90Brtk6nd-4" value="Registros delictivos en la región del Callao" style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="EFE2q5xteNy90Brtk6nd-15">
+        <mxCell id="EFE2q5xteNy90Brtk6nd-4" value="Registros delictivos en la región del Callao" style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="EFE2q5xteNy90Brtk6nd-15" vertex="1">
           <mxGeometry x="100" y="35" width="100" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="EFE2q5xteNy90Brtk6nd-16" value="" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1.002;entryY=0.464;entryDx=0;entryDy=0;entryPerimeter=0;curved=1;" edge="1" parent="1" source="EFE2q5xteNy90Brtk6nd-5" target="EFE2q5xteNy90Brtk6nd-8">
+        <mxCell id="EFE2q5xteNy90Brtk6nd-16" value="" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1.002;entryY=0.464;entryDx=0;entryDy=0;entryPerimeter=0;curved=1;" parent="1" source="EFE2q5xteNy90Brtk6nd-5" target="EFE2q5xteNy90Brtk6nd-8" edge="1">
           <mxGeometry width="100" relative="1" as="geometry">
             <mxPoint x="710" y="360" as="sourcePoint" />
             <mxPoint x="810" y="360" as="targetPoint" />
@@ -52,22 +52,22 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="EFE2q5xteNy90Brtk6nd-17" value="" style="group" vertex="1" connectable="0" parent="1">
+        <mxCell id="EFE2q5xteNy90Brtk6nd-17" value="" style="group" parent="1" vertex="1" connectable="0">
           <mxGeometry x="50" y="180" width="220" height="110" as="geometry" />
         </mxCell>
-        <mxCell id="EFE2q5xteNy90Brtk6nd-18" value="Evaluación del modelo" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;" vertex="1" parent="EFE2q5xteNy90Brtk6nd-17">
+        <mxCell id="EFE2q5xteNy90Brtk6nd-18" value="Evaluación del modelo" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;" parent="EFE2q5xteNy90Brtk6nd-17" vertex="1">
           <mxGeometry width="220" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="EFE2q5xteNy90Brtk6nd-19" value="Accuracy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="EFE2q5xteNy90Brtk6nd-17">
+        <mxCell id="EFE2q5xteNy90Brtk6nd-19" value="Accuracy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" parent="EFE2q5xteNy90Brtk6nd-17" vertex="1">
           <mxGeometry x="30" y="31" width="70" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="EFE2q5xteNy90Brtk6nd-21" value="Precision" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="EFE2q5xteNy90Brtk6nd-17">
+        <mxCell id="EFE2q5xteNy90Brtk6nd-21" value="F1 Score" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" parent="EFE2q5xteNy90Brtk6nd-17" vertex="1">
           <mxGeometry x="130" y="31" width="70" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="EFE2q5xteNy90Brtk6nd-22" value="Recall" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="EFE2q5xteNy90Brtk6nd-17">
+        <mxCell id="EFE2q5xteNy90Brtk6nd-22" value="Recall" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" parent="EFE2q5xteNy90Brtk6nd-17" vertex="1">
           <mxGeometry x="75" y="61" width="70" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="EFE2q5xteNy90Brtk6nd-23" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;curved=1;" edge="1" parent="1" source="EFE2q5xteNy90Brtk6nd-8" target="EFE2q5xteNy90Brtk6nd-18">
+        <mxCell id="EFE2q5xteNy90Brtk6nd-23" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;curved=1;" parent="1" source="EFE2q5xteNy90Brtk6nd-8" target="EFE2q5xteNy90Brtk6nd-18" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="380" y="270" as="sourcePoint" />
             <mxPoint x="430" y="220" as="targetPoint" />
@@ -76,8 +76,17 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="EFE2q5xteNy90Brtk6nd-24" value="Random Forest" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
-          <mxGeometry x="370" y="375" width="70" height="40" as="geometry" />
+        <mxCell id="EFE2q5xteNy90Brtk6nd-24" value="Random Forest" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="360" y="372.5" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="PiMwhYVJr19cjwonytXV-3" value="Logistic Regression" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="550" y="377.5" width="70" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="PiMwhYVJr19cjwonytXV-4" value="Support Vector Machine (SVM)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="360" y="430" width="100" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="PiMwhYVJr19cjwonytXV-5" value="Gradient Boosting Classifier" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="500" y="430" width="110" height="35" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
